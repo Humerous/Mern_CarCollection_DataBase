@@ -1,0 +1,17 @@
+body {
+  background-image: url('./assets/background_img.jpg');
+  background-position: calc(50% - 50px) 50%;
+  background-repeat: no-repeat;
+}
+
+.App {
+  text-align: center;
+}
+
+.nav-bar {
+  margin-bottom: 1px;
+}
+
+.container {
+  margin-top: 50px;
+}
