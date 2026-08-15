@@ -1,6 +1,6 @@
 {
-  "short_name": "Car Collection",
-  "name": "Car Collection Database",
+  "short_name": "Miller’s Garage",
+  "name": "David Miller’s Garage",
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#132238",

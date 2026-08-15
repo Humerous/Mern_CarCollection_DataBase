@@ -6,7 +6,7 @@ import App from './App';
 
 jest.mock('axios');
 
-test('renders the car collection application', async () => {
+test('renders David Miller’s Garage', async () => {
   axios.get.mockResolvedValue({ data: [] });
 
   const container = document.createElement('div');
@@ -17,7 +17,7 @@ test('renders the car collection application', async () => {
     root.render(<App />);
   });
 
-  expect(container.textContent).toContain('Car Collection');
+  expect(container.textContent).toContain('David Miller’s Garage');
 
   act(() => {
     root.unmount();

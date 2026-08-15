@@ -63,7 +63,7 @@ class CarsList extends Component {
       <section className='content-card' aria-labelledby='collection-title'>
         <div className='page-heading'>
           <div>
-            <h1 id='collection-title'>Car Collection</h1>
+            <h1 id='collection-title'>David Miller’s Garage</h1>
             <p className='page-intro'>A restored MERN CRUD project with safe demo data.</p>
           </div>
           <Link to='/add' className='btn btn-primary'>

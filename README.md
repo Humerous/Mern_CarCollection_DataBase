@@ -1,25 +1,25 @@
 # David Miller’s Garage
 
-A restored MERN car collection CRUD application originally created as a Hyperion Development Bootcamp project.
+A restored MERN car collection CRUD application, originally built in 2020 as part of the Hyperion Development Bootcamp.
 
-The project began as a 2020 learning build and has since been repaired so the original core workflow works reliably on a current development stack while preserving the original repository history.
+The project has been repaired and brought back to a reliable working state while preserving its original Git history and original learning-project context.
 
 ## Live Demo
 
-**Online preview:** https://mern-car-collection-preview-fixed.vercel.app
+**Online demo:** https://mern-car-collection-preview-fixed.vercel.app
 
-The online version is a safe demo environment intended for testing the interface and CRUD workflow. Demo data is disposable and should not be treated as permanent storage.
+The hosted version is a safe demonstration environment. Demo data is disposable and is not intended as permanent storage.
 
-## What It Does
+## Features
 
-David Miller’s Garage allows you to manage a simple car collection:
-
-- View cars in the collection
+- View the current car collection
 - Add a car
-- Edit existing car details
+- Edit car details
 - Delete a car
-- Validate required fields
-- Display loading, empty and error states
+- Required-field validation
+- Loading, empty and error states
+- Responsive interface
+- Keyboard-friendly controls and improved form labelling
 
 Each car stores:
 
@@ -47,32 +47,41 @@ Each car stores:
 - Morgan
 - dotenv
 
-## Project History
+### Quality and delivery
 
-This repository started as a MERN CRUD learning project in 2020.
+- API CRUD smoke test
+- React test
+- Production build verification
+- GitHub Actions CI
+- Safe in-memory demo mode when MongoDB credentials are not supplied
 
-The modernisation work focused on restoration rather than replacing the application with an unrelated rewrite. The original Git history has been preserved while the working branch repairs issues found in the old project.
+## Project Restoration
 
-Key restoration work includes:
+This repository began as an early full-stack MERN project in 2020. The restoration work focused on fixing the original application rather than replacing it with an unrelated rewrite.
+
+The completed work includes:
 
 - repaired add, edit and delete request handling;
 - removed hard-coded frontend API addresses;
 - added safe environment configuration;
-- added an in-memory demo data mode so the project can run without database credentials;
-- improved form and table accessibility;
+- added an in-memory demo data mode;
 - improved responsive behaviour;
-- added visible loading and error states;
-- added API CRUD smoke testing;
-- added GitHub Actions CI;
-- verified the React production build.
+- improved accessibility and action semantics;
+- added visible loading and error handling;
+- added API CRUD testing;
+- added automated CI;
+- verified the production React build;
+- refreshed the project identity as **David Miller’s Garage**.
 
-## Current Working Branch
+## Repository History
 
-Development and restoration work is currently isolated on:
+The completed application is maintained on `main`.
 
-`modernisation/2026`
+The original pre-restoration state is preserved on:
 
-The historical `main` branch remains preserved.
+`archive/pre-modernisation`
+
+This keeps the historical version available without making it the public default version of the project.
 
 ## Local Setup
 
@@ -103,13 +112,13 @@ From `Mern_CarCollection_DataBase`:
 npm start
 ```
 
-The API runs on:
+The API runs at:
 
 ```text
 http://localhost:4000
 ```
 
-If no MongoDB connection is supplied, the app uses the safe in-memory demo data mode.
+If no MongoDB connection is configured, the API automatically uses the safe in-memory demo mode.
 
 ### Run the React client
 
@@ -119,7 +128,7 @@ From `Mern_CarCollection_DataBase/client`:
 npm start
 ```
 
-The client uses the local API through its development proxy.
+The React development server uses the local API through its proxy configuration.
 
 ## Optional MongoDB Mode
 
@@ -148,7 +157,7 @@ From `Mern_CarCollection_DataBase`:
 npm test
 ```
 
-The smoke test checks the core API flow:
+The smoke test verifies:
 
 ```text
 health → list → create → read → update → delete
@@ -170,28 +179,17 @@ From `Mern_CarCollection_DataBase/client`:
 npm run build
 ```
 
-GitHub Actions also runs the API test, React test and production build automatically on the modernisation branch.
-
-## Accessibility
-
-The restored interface includes improvements to:
-
-- semantic headings;
-- form label associations;
-- keyboard focus states;
-- action button semantics;
-- responsive table handling;
-- user-visible loading and error states.
+GitHub Actions runs the API test, React test and production build automatically for `main` and pull requests targeting `main`.
 
 ## Limitations
 
-- The public demo uses disposable demo data.
-- Authentication is not part of the original project scope.
-- The project remains intentionally small and focused on its original CRUD purpose.
+- The hosted demo uses disposable data.
+- Authentication is outside the scope of the original project.
+- The application intentionally remains a focused CRUD project rather than being expanded into a larger product.
 
 ## Original Context
 
-Created as part of the Hyperion Development Bootcamp and retained as a record of early full-stack MERN development work.
+Created as part of the Hyperion Development Bootcamp and retained as a record of early full-stack MERN development work and later restoration work.
 
 ## Author
 

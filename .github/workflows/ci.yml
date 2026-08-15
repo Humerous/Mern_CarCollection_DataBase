@@ -3,8 +3,10 @@ name: CI
 on:
   push:
     branches:
-      - modernisation/2026
+      - main
   pull_request:
+    branches:
+      - main
 
 jobs:
   test-and-build:

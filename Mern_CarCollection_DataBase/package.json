@@ -1,8 +1,8 @@
 {
-  "name": "car-collection-database",
+  "name": "david-millers-garage",
   "version": "1.1.0",
   "private": true,
-  "description": "Restored MERN car collection CRUD application",
+  "description": "David Miller’s Garage — restored MERN car collection CRUD application",
   "main": "server.js",
   "engines": {
     "node": ">=20"
