@@ -1,4 +1,4 @@
-# David MilleR Garage
+# David Miller Garage
 
 A restored MERN car collection CRUD application, originally built in 2020 as part of the Hyperion Development Bootcamp.
 
