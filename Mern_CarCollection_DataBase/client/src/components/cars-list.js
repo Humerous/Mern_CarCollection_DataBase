@@ -17,6 +17,16 @@ class CarsList extends Component {
   loadCars = async () => {
     try {
       const response = await axios.get('/cars/');
+
+      if (!Array.isArray(response.data)) {
+        this.setState({
+          cars: [],
+          loading: false,
+          error: 'Unexpected response from the car API.',
+        });
+        return;
+      }
+
       this.setState({ cars: response.data, loading: false, error: '' });
     } catch (error) {
       this.setState({
