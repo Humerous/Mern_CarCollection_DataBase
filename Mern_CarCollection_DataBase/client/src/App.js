@@ -1,11 +1,7 @@
 import React from 'react';
 import './App.css';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-//<--- IMPORT BOOTSRAP SCRIPT --->//
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-
-//<--- IMPORT ALL FILES --->//
 import Navbar from './components/navbar';
 import CarsList from './components/cars-list';
 import EditCar from './components/edit-car';
@@ -15,14 +11,13 @@ function App() {
   return (
     <Router>
       <Navbar />
-      <div className='container'>
-        {/* HOME ROUTE */}
-        <Route path='/' exact component={CarsList} />
-        {/* CAR EDIT ROUTE */}
-        <Route path='/edit/:id' exact component={EditCar} />
-        {/* ADD NEW CAR */}
-        <Route path='/add' exact component={AddCar} />
-      </div>
+      <main className='container app-shell' id='main-content'>
+        <Switch>
+          <Route path='/' exact component={CarsList} />
+          <Route path='/edit/:id' exact component={EditCar} />
+          <Route path='/add' exact component={AddCar} />
+        </Switch>
+      </main>
     </Router>
   );
 }

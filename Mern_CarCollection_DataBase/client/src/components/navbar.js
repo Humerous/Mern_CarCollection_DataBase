@@ -1,33 +1,21 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import '../App.css';
+import React from 'react';
+import { Link, NavLink } from 'react-router-dom';
 
-class Navbar extends Component {
-  render() {
-    return (
-      <div className='nav-bar'>
-        <nav className='navbar navbar-light navbar-expand-lg'>
-          <Link to='/' className='navbar-brand'>
-            DAVID MILLER EXOTIC CARS
-          </Link>
-          <div className='collpase navbar-collapse'>
-            <ul className='navbar-nav ml-auto'>
-              <li className='navbar-item'>
-                <Link to='/' className='nav-link'>
-                  CARS COLLECTION
-                </Link>
-              </li>
-              <li className='navbar-item'>
-                <Link to='/add' className='nav-link'>
-                  ADD NEW CAR
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-    );
-  }
+function Navbar() {
+  return (
+    <header className='site-header'>
+      <a className='skip-link' href='#main-content'>Skip to main content</a>
+      <nav className='site-nav container' aria-label='Primary navigation'>
+        <Link to='/' className='brand'>
+          David Miller’s Garage
+        </Link>
+        <div className='nav-links'>
+          <NavLink exact to='/' activeClassName='active'>Collection</NavLink>
+          <NavLink to='/add' activeClassName='active'>Add car</NavLink>
+        </div>
+      </nav>
+    </header>
+  );
 }
 
 export default Navbar;

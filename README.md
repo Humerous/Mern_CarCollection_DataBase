@@ -1,126 +1,200 @@
-# Mern_CarCollection_DataBase
+# David Miller’s Garage
 
-A simple MERN app which uses CRUD tools.
+A restored MERN car collection CRUD application, originally built in 2020 as part of the Hyperion Development Bootcamp.
 
-### Table of Contents
+The project has been repaired and brought back to a reliable working state while preserving its original Git history and original learning-project context.
 
-You're sections headers will be used to reference location of destination.
+## Live Demo
 
-- [Features](#features)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [GET Routes](#getroutes)
-- [Beyond GET Routes](#beyondgetroutes)
-- [Postman](#postman)
-- [References](#references)
-- [License](#license)
-- [Author Info](#author-info)
+**Online demo:** https://mern-car-collection-preview-fixed.vercel.app
+
+The hosted version is a safe demonstration environment. Demo data is disposable and is not intended as permanent storage.
 
 ## Features
 
-- Node js
-- Express js
-- React js
-- MongoDB
+- View the current car collection
+- Add a car
+- Edit car details
+- Delete a car
+- Required-field validation
+- Loading, empty and error states
+- Responsive interface
+- Keyboard-friendly controls and improved form labelling
 
-## Requirements
+Each car stores:
 
-- [node & npm](https://nodejs.org/en/)
+- Owner
+- Make
+- Model
+- Colour
+- Registration number
 
-## Installation
+## Technology
 
-- `01.\DOWNLOAD THE ZIP REPOSITORT`
-- `02.\_UNZIP`
-- `03.\_CD INTO PROJECT`
-- `04.\_NPM INSTALL`
-- `05.\_CD INTO PROJECT IN CLIENT FOLDER`
-- `06.\_NPM INSTALL`
-- `07.\CD OUT AND BACK INTO ROOT FOLDER`
-- `08.\_NPM RUN DEV - USING CONCURRENTLY TO RUN BOTH SERVERS IN ONE COMMAND`
-- `10.\_ENJOY!`
+### Frontend
 
-- `OR`
+- React 18
+- React Router
+- Axios
+- Create React App
 
-- `01.\DOWNLOAD THE ZIP REPOSITORY`
-- `02.\_UNZIP`
-- `03.\_CD INTO PROJECT`
-- `04.\_NPM INSTALL`
-- `05.\_NPM START`
-- `06.\_CD INTO PROJECT IN CLIENT FOLDER`
-- `07.\_NPM INSTALL`
-- `08.\_NPM START`
-- `09.\_ENJOY!`
+### Backend
 
-### GET Routes
+- Node.js
+- Express
+- MongoDB / Mongoose
+- CORS
+- Morgan
+- dotenv
 
-- visit http://localhost: I’m 4000
+### Quality and delivery
 
-  - /add/
-  - /add/:id
+- API CRUD smoke test
+- React test
+- Production build verification
+- GitHub Actions CI
+- Safe in-memory demo mode when MongoDB credentials are not supplied
 
-### Beyond GET Routes
+## Project Restoration
 
-#### CURL
+This repository began as an early full-stack MERN project in 2020. The restoration work focused on fixing the original application rather than replacing it with an unrelated rewrite.
 
-- Create a new car with:
-  - `curl -X POST -H "Content-Type:application/json" http://localhost:4000/`
-  - Update a car in list with:
-  - `curl -X PUT -H "Content-Type:application/json" http://localhost:4000/add`
-- Delete a car from collection with:
-  - `curl -X DELETE -H "Content-Type:application/json" http://localhost:4000/:id`
+The completed work includes:
 
-#### Postman
+- repaired add, edit and delete request handling;
+- removed hard-coded frontend API addresses;
+- added safe environment configuration;
+- added an in-memory demo data mode;
+- improved responsive behaviour;
+- improved accessibility and action semantics;
+- added visible loading and error handling;
+- added API CRUD testing;
+- added automated CI;
+- verified the production React build;
+- refreshed the project identity as **David Miller’s Garage**.
 
-- Install [Postman](https://www.getpostman.com/apps) to interact with REST API
-- Create a message with:
-  - URL: http://localhost:4000/api
-  - Method: POST
-  - Body: raw + JSON (application/json)
-  - Update a message with:
-  - URL: http://localhost:4000/:id`
-  - Method: PUT
-- Delete a message with:
-  - URL: http://localhost:4000/:id`
-  - Method: DELETE
+## Repository History
 
-## References
+The completed application is maintained on `main`.
 
-Hyperion Development Bootcamp
+The original pre-restoration state is preserved on:
 
-[Back To The Top](#read-me-template)
+`archive/pre-modernisation`
 
----
+This keeps the historical version available without making it the public default version of the project.
+
+## Local Setup
+
+### Requirements
+
+- Node.js 20 or newer
+- npm
+
+### Install the API
+
+```bash
+cd Mern_CarCollection_DataBase
+npm install
+```
+
+### Install the React client
+
+```bash
+cd client
+npm install
+```
+
+### Run the API
+
+From `Mern_CarCollection_DataBase`:
+
+```bash
+npm start
+```
+
+The API runs at:
+
+```text
+http://localhost:4000
+```
+
+If no MongoDB connection is configured, the API automatically uses the safe in-memory demo mode.
+
+### Run the React client
+
+From `Mern_CarCollection_DataBase/client`:
+
+```bash
+npm start
+```
+
+The React development server uses the local API through its proxy configuration.
+
+## Optional MongoDB Mode
+
+Copy `.env.example` to `.env` and configure the MongoDB connection value when persistent storage is required.
+
+Do not commit `.env` or database credentials to Git.
+
+## API Routes
+
+```text
+GET     /health
+GET     /cars/
+POST    /cars/add
+GET     /cars/:id
+POST    /cars/update/:id
+DELETE  /cars/:id
+```
+
+## Testing
+
+### API CRUD test
+
+From `Mern_CarCollection_DataBase`:
+
+```bash
+npm test
+```
+
+The smoke test verifies:
+
+```text
+health → list → create → read → update → delete
+```
+
+### React test
+
+From `Mern_CarCollection_DataBase/client`:
+
+```bash
+npm test
+```
+
+### Production build
+
+From `Mern_CarCollection_DataBase/client`:
+
+```bash
+npm run build
+```
+
+GitHub Actions runs the API test, React test and production build automatically for `main` and pull requests targeting `main`.
+
+## Limitations
+
+- The hosted demo uses disposable data.
+- Authentication is outside the scope of the original project.
+- The application intentionally remains a focused CRUD project rather than being expanded into a larger product.
+
+## Original Context
+
+Created as part of the Hyperion Development Bootcamp and retained as a record of early full-stack MERN development work and later restoration work.
+
+## Author
+
+**David Miller**
 
 ## License
 
 MIT License
-
-Copyright (c) [2022][david k miller]
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-[Back To The Top](#read-me-template)
-
----
-
-## Author Info
-
-- Twitter - [@DavidMillerster](https://twitter.com/DavidMillerster)
-
-[Back To The Top](#read-me-template)
