@@ -1,9 +1,26 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { act } from 'react-dom/test-utils';
+import { createRoot } from 'react-dom/client';
+import axios from 'axios';
 import App from './App';
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
+jest.mock('axios');
+
+test('renders the car collection application', async () => {
+  axios.get.mockResolvedValue({ data: [] });
+
+  const container = document.createElement('div');
+  document.body.appendChild(container);
+  const root = createRoot(container);
+
+  await act(async () => {
+    root.render(<App />);
+  });
+
+  expect(container.textContent).toContain('Car Collection');
+
+  act(() => {
+    root.unmount();
+  });
+  container.remove();
 });

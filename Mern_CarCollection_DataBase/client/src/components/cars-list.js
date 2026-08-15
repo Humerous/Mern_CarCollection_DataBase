@@ -2,90 +2,120 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-//<--- CAR FUNCTION --->//
-const Car = (props) => (
-  <tr>
-    <td>{props.car.owner}</td>
-    <td>{props.car.model}</td>
-    <td>{props.car.make}</td>
-    <td>{props.car.color}</td>
-    <td>{props.car.registration_Number}</td>
-    <td>
-      <Link to={'/edit/' + props.car._id}>
-        {' '}
-        <i className='text-success fas fa-pencil-alt'> edit</i>{' '}
-      </Link>{' '}
-      |{' '}
-      <a
-        href='/'
-        onClick={() => {
-          props.deleteCar(props.car._id);
-        }}
-      >
-        {' '}
-        <i className='text-danger fas fa-trash'> delete</i>{' '}
-      </a>
-    </td>
-  </tr>
-);
-
-//<--- CLASS FOR CAR LIST  --->//
 class CarsList extends Component {
-  constructor(props) {
-    super(props);
-    this.deleteCar = this.deleteCar.bind(this);
+  state = {
+    cars: [],
+    loading: true,
+    error: '',
+    deletingId: '',
+  };
 
-    this.state = { cars: [] };
+  async componentDidMount() {
+    await this.loadCars();
   }
 
-  componentDidMount() {
-    axios
-      .get('http://localhost:4000/cars/')
-      .then((response) => {
-        this.setState({ cars: response.data });
-      })
-      .catch((error) => {
-        console.log(error);
+  loadCars = async () => {
+    try {
+      const response = await axios.get('/cars/');
+      this.setState({ cars: response.data, loading: false, error: '' });
+    } catch (error) {
+      this.setState({
+        loading: false,
+        error: error.response?.data?.error || 'Unable to load the car collection.',
       });
-  }
+    }
+  };
 
-  //<--- DELTE CAR BY IDs --->//
-  deleteCar(id) {
-    axios.delete('http://localhost:4000/cars/' + id).then((response) => {
-      console.log(response.data);
-    });
+  deleteCar = async (car) => {
+    const confirmed = window.confirm(`Delete ${car.make} ${car.model}?`);
+    if (!confirmed) return;
 
-    this.setState({
-      cars: this.state.cars.filter((el) => el._id !== id),
-    });
-  }
-  //<--- MAP THREW CAR LIST BY IDs --->//s
-  carList() {
-    return this.state.cars.map((currentcar) => {
-      return (
-        <Car car={currentcar} deleteCar={this.deleteCar} key={currentcar._id} />
-      );
-    });
-  }
+    this.setState({ deletingId: car._id, error: '' });
+
+    try {
+      await axios.delete(`/cars/${car._id}`);
+      this.setState((state) => ({
+        cars: state.cars.filter((item) => item._id !== car._id),
+        deletingId: '',
+      }));
+    } catch (error) {
+      this.setState({
+        deletingId: '',
+        error: error.response?.data?.error || 'Unable to delete the car.',
+      });
+    }
+  };
 
   render() {
+    const { cars, loading, error, deletingId } = this.state;
+
     return (
-      <div>
-        <h3>Cars Collection</h3>
-        {/* cars table*/}
-        <table className='table'>
-          <thead>
-            <tr>
-              <th>Owner</th>
-              <th>Model</th>
-              <th>Make</th>
-              <th>Color</th>
-              <th>Registration Number</th>
-            </tr>
-          </thead>
-          <tbody>{this.carList()}</tbody>
-        </table>
-      </div>
+      <section className='content-card' aria-labelledby='collection-title'>
+        <div className='page-heading'>
+          <div>
+            <h1 id='collection-title'>Car Collection</h1>
+            <p className='page-intro'>A restored MERN CRUD project with safe demo data.</p>
+          </div>
+          <Link to='/add' className='btn btn-primary'>
+            Add car
+          </Link>
+        </div>
+
+        {error && (
+          <div className='alert alert-danger' role='alert'>
+            {error}
+          </div>
+        )}
+
+        {loading ? (
+          <p role='status'>Loading cars…</p>
+        ) : cars.length === 0 ? (
+          <div className='empty-state'>
+            <p>No cars are currently in the collection.</p>
+            <Link to='/add'>Add the first car</Link>
+          </div>
+        ) : (
+          <div className='table-responsive'>
+            <table className='table table-hover car-table'>
+              <caption className='sr-only'>Cars currently stored in the collection</caption>
+              <thead>
+                <tr>
+                  <th scope='col'>Owner</th>
+                  <th scope='col'>Make</th>
+                  <th scope='col'>Model</th>
+                  <th scope='col'>Colour</th>
+                  <th scope='col'>Registration</th>
+                  <th scope='col'>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cars.map((car) => (
+                  <tr key={car._id}>
+                    <td>{car.owner}</td>
+                    <td>{car.make}</td>
+                    <td>{car.model}</td>
+                    <td>{car.color}</td>
+                    <td>{car.registration_Number}</td>
+                    <td className='actions-cell'>
+                      <Link to={`/edit/${car._id}`} className='btn btn-sm btn-outline-success'>
+                        Edit
+                      </Link>
+                      <button
+                        type='button'
+                        className='btn btn-sm btn-outline-danger'
+                        onClick={() => this.deleteCar(car)}
+                        disabled={deletingId === car._id}
+                      >
+                        {deletingId === car._id ? 'Deleting…' : 'Delete'}
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
     );
   }
 }

@@ -1,88 +1,38 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-//<--- CLASS FOR EDITING A CAR --->//
 class EditCar extends Component {
-  constructor(props) {
-    super(props);
+  state = {
+    owner: '',
+    model: '',
+    make: '',
+    color: '',
+    registration_Number: '',
+    loading: true,
+    saving: false,
+    error: '',
+  };
 
-    this.onChangeOwner = this.onChangeOwner.bind(this);
-    this.onChangeModel = this.onChangeModel.bind(this);
-    this.onChangeMake = this.onChangeMake.bind(this);
-    this.onChangeColor = this.onChangeColor.bind(this);
-    this.onChangeRegistrationNumber = this.onChangeRegistrationNumber.bind(
-      this
-    );
-    this.onSubmit = this.onSubmit.bind(this);
-
-    //<--- INITIAL STATE --->//
-    this.state = {
-      owner: '',
-      model: '',
-      make: '',
-      color: '',
-      registration_Number: '',
-    };
-  }
-
-  componentDidMount() {
-    //<--- RETRIEVE DATA --->//
-    axios
-      .get('http://localhost:4000/cars/' + this.props.match.params.id)
-      .then((response) => {
-        this.setState({
-          owner: response.data.owner,
-          model: response.data.model,
-          make: response.data.make,
-          color: response.data.color,
-          registration_Number: response.data.registration_Number,
-        });
-      })
-      .catch(function (error) {
-        console.log(error);
+  async componentDidMount() {
+    try {
+      const response = await axios.get(`/cars/${this.props.match.params.id}`);
+      this.setState({ ...response.data, loading: false });
+    } catch (error) {
+      this.setState({
+        loading: false,
+        error: error.response?.data?.error || 'Unable to load this car.',
       });
+    }
   }
 
-  //<--- EDIT CAR OWNER INFO  --->//
-  onChangeOwner(e) {
-    this.setState({
-      owner: e.target.value,
-    });
-  }
+  onChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
 
-  //<--- EDIT CAR MODEL INFO  --->//
-  onChangeModel(e) {
-    this.setState({
-      model: e.target.value,
-    });
-  }
+  onSubmit = async (event) => {
+    event.preventDefault();
+    this.setState({ saving: true, error: '' });
 
-  //<--- EDIT CAR MAKE INFO  --->//
-  onChangeMake(e) {
-    this.setState({
-      make: e.target.value,
-    });
-  }
-
-  //<--- EDIT COLOR MAKE INFO  --->//
-  onChangeColor(e) {
-    this.setState({
-      color: e.target.value,
-    });
-  }
-
-  //<--- EDIT CAR REG INFO  --->//
-  onChangeRegistrationNumber(e) {
-    this.setState({
-      registration_Number: e.target.value,
-    });
-  }
-
-  //<--- SUBMIT EDITs -  CAR INFO  --->//
-  onSubmit(e) {
-    e.preventDefault();
-
-    //<--- SET NEW STATE --->//
     const car = {
       owner: this.state.owner,
       model: this.state.model,
@@ -91,74 +41,62 @@ class EditCar extends Component {
       registration_Number: this.state.registration_Number,
     };
 
-    console.log(car);
-    axios
-      .post(
-        'http://localhost:4000/cars/update/' + this.props.match.params.id,
-        car
-      )
-      .then((res) => console.log(res.data))
-      .catch((error) => {
-        console.log(error);
+    try {
+      await axios.post(`/cars/update/${this.props.match.params.id}`, car);
+      this.props.history.push('/');
+    } catch (error) {
+      this.setState({
+        saving: false,
+        error: error.response?.data?.error || 'Unable to update the car. Please try again.',
       });
-    window.location = '/';
+    }
+  };
+
+  renderField(name, label) {
+    return (
+      <div className='form-group'>
+        <label htmlFor={`edit-${name}`}>{label}</label>
+        <input
+          id={`edit-${name}`}
+          name={name}
+          type='text'
+          className='form-control'
+          value={this.state[name]}
+          onChange={this.onChange}
+          required
+        />
+      </div>
+    );
   }
 
   render() {
+    if (this.state.loading) {
+      return <p role='status'>Loading car…</p>;
+    }
+
     return (
-      <div>
-        <h3>Edit Car Details</h3>
+      <section className='content-card' aria-labelledby='edit-car-title'>
+        <h1 id='edit-car-title'>Edit Car</h1>
+        <p className='page-intro'>Update the selected car details.</p>
+
+        {this.state.error && (
+          <div className='alert alert-danger' role='alert'>
+            {this.state.error}
+          </div>
+        )}
+
         <form onSubmit={this.onSubmit}>
-          <div className='form-group'>
-            <label>Car Owner </label>
-            <input
-              type='text'
-              className='form-control'
-              value={this.state.owner}
-              onChange={this.onChangeOwner}
-            />
-          </div>
-          <div className='form-group'>
-            <label>Car Model </label>
-            <input
-              type='text'
-              className='form-control'
-              value={this.state.model}
-              onChange={this.onChangeModel}
-            />
-          </div>
-          <div className='form-group'>
-            <label>Car Make </label>
-            <input
-              type='text'
-              className='form-control'
-              value={this.state.make}
-              onChange={this.onChangeMake}
-            />
-          </div>
-          <div className='form-group'>
-            <label>Car Color </label>
-            <input
-              type='text'
-              className='form-control'
-              value={this.state.color}
-              onChange={this.onChangeColor}
-            />
-          </div>
-          <div className='form-group'>
-            <label>Car Registration Number </label>
-            <input
-              type='text'
-              className='form-control'
-              value={this.state.registration_Number}
-              onChange={this.onChangeRegistrationNumber}
-            />
-          </div>
-          <div className='form-group'>
-            <input type='submit' value='Edit Car' className='btn btn-success' />
-          </div>
+          {this.renderField('owner', 'Owner')}
+          {this.renderField('model', 'Model')}
+          {this.renderField('make', 'Make')}
+          {this.renderField('color', 'Colour')}
+          {this.renderField('registration_Number', 'Registration number')}
+
+          <button type='submit' className='btn btn-success' disabled={this.state.saving}>
+            {this.state.saving ? 'Saving…' : 'Save changes'}
+          </button>
         </form>
-      </div>
+      </section>
     );
   }
 }

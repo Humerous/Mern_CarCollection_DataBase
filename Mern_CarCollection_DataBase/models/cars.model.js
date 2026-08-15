@@ -1,22 +1,14 @@
 const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
-
-//<--- CAR SCHEMA OBJECT --->//
-const carSchema = new Schema(
+const carSchema = new mongoose.Schema(
   {
-    owner: { type: String, required: true },
-    model: { type: String, required: true },
-    make: { type: String, required: true },
-    color: { type: String, required: true },
-    registration_Number: { type: String, required: true },
+    owner: { type: String, required: true, trim: true },
+    model: { type: String, required: true, trim: true },
+    make: { type: String, required: true, trim: true },
+    color: { type: String, required: true, trim: true },
+    registration_Number: { type: String, required: true, trim: true },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
-//<--- EXPORT CAR SCHEMA OBJECT --->//
-const Car = mongoose.model('Car', carSchema);
-
-module.exports = Car;
+module.exports = mongoose.model('Car', carSchema);

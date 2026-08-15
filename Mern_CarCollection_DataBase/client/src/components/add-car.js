@@ -1,70 +1,25 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-//<--- CLASS FOR ADDING A NEW CAR --->//
 class AddCar extends Component {
-  constructor(props) {
-    super(props);
+  state = {
+    owner: '',
+    model: '',
+    make: '',
+    color: '',
+    registration_Number: '',
+    saving: false,
+    error: '',
+  };
 
-    this.onChangeOwner = this.onChangeOwner.bind(this);
-    this.onChangeModel = this.onChangeModel.bind(this);
-    this.onChangeMake = this.onChangeMake.bind(this);
-    this.onChangeColor = this.onChangeColor.bind(this);
-    this.onChangeRegistrationNumber = this.onChangeRegistrationNumber.bind(
-      this
-    );
-    this.onSubmit = this.onSubmit.bind(this);
+  onChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
 
-    //<--- INITIAL STATE FOR CAR INFO  --->//
-    this.state = {
-      owner: '',
-      model: '',
-      make: '',
-      color: '',
-      registration_Number: '',
-    };
-  }
+  onSubmit = async (event) => {
+    event.preventDefault();
+    this.setState({ saving: true, error: '' });
 
-  //<--- CAR OWNER INFO  --->//
-  onChangeOwner(e) {
-    this.setState({
-      owner: e.target.value,
-    });
-  }
-
-  //<--- CAR MODEL INFO  --->//
-  onChangeModel(e) {
-    this.setState({
-      model: e.target.value,
-    });
-  }
-
-  //<--- CAR MAKE INFO  --->//
-  onChangeMake(e) {
-    this.setState({
-      make: e.target.value,
-    });
-  }
-
-  //<--- CAR COLOR INFO  --->//
-  onChangeColor(e) {
-    this.setState({
-      color: e.target.value,
-    });
-  }
-
-  //<--- CAR REG INFO  --->//
-  onChangeRegistrationNumber(e) {
-    this.setState({
-      registration_Number: e.target.value,
-    });
-  }
-
-  //<--- FORM SUBMIT INFO BUTTON --->//
-  onSubmit(e) {
-    e.preventDefault();
-
-    //<--- SET STATE --->//
     const car = {
       owner: this.state.owner,
       model: this.state.model,
@@ -73,80 +28,58 @@ class AddCar extends Component {
       registration_Number: this.state.registration_Number,
     };
 
-    console.log(car);
-    axios
-      .post('http://localhost:4000/cars/add', car)
-      .then((res) => console.log(res.data))
-      .catch((error) => {
-        console.log(error);
+    try {
+      await axios.post('/cars/add', car);
+      this.props.history.push('/');
+    } catch (error) {
+      this.setState({
+        saving: false,
+        error: error.response?.data?.error || 'Unable to add the car. Please try again.',
       });
-    window.location = '/';
+    }
+  };
+
+  renderField(name, label) {
+    return (
+      <div className='form-group'>
+        <label htmlFor={`add-${name}`}>{label}</label>
+        <input
+          id={`add-${name}`}
+          name={name}
+          type='text'
+          className='form-control'
+          value={this.state[name]}
+          onChange={this.onChange}
+          required
+        />
+      </div>
+    );
   }
 
   render() {
     return (
-      <div>
-        <h3>Add Car Details</h3>
+      <section className='content-card' aria-labelledby='add-car-title'>
+        <h1 id='add-car-title'>Add Car</h1>
+        <p className='page-intro'>Add a car to the collection.</p>
+
+        {this.state.error && (
+          <div className='alert alert-danger' role='alert'>
+            {this.state.error}
+          </div>
+        )}
+
         <form onSubmit={this.onSubmit}>
-          <div className='form-group'>
-            <label>Car Owner </label>
-            <input
-              type='text'
-              className='form-control'
-              value={this.state.owner}
-              onChange={this.onChangeOwner}
-              required
-            />
-          </div>
-          <div className='form-group'>
-            <label>Car Model</label>
-            <input
-              type='text'
-              className='form-control'
-              value={this.state.model}
-              onChange={this.onChangeModel}
-              required
-            />
-          </div>
-          <div className='form-group'>
-            <label>Car Make </label>
-            <input
-              type='text'
-              className='form-control'
-              value={this.state.make}
-              onChange={this.onChangeMake}
-              required
-            />
-          </div>
-          <div className='form-group'>
-            <label>Car Color </label>
-            <input
-              type='text'
-              className='form-control'
-              value={this.state.color}
-              onChange={this.onChangeColor}
-              required
-            />
-          </div>
-          <div className='form-group'>
-            <label>Car Registration Number </label>
-            <input
-              type='text'
-              className='form-control'
-              value={this.state.registration_Number}
-              onChange={this.onChangeRegistrationNumber}
-              required
-            />
-          </div>
-          <div className='form-group'>
-            <input
-              type='submit'
-              value='Add New Car'
-              className='btn btn-primary'
-            />
-          </div>
+          {this.renderField('owner', 'Owner')}
+          {this.renderField('model', 'Model')}
+          {this.renderField('make', 'Make')}
+          {this.renderField('color', 'Colour')}
+          {this.renderField('registration_Number', 'Registration number')}
+
+          <button type='submit' className='btn btn-primary' disabled={this.state.saving}>
+            {this.state.saving ? 'Adding…' : 'Add car'}
+          </button>
         </form>
-      </div>
+      </section>
     );
   }
 }
