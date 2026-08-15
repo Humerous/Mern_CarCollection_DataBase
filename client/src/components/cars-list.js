@@ -16,7 +16,7 @@ class CarsList extends Component {
 
   loadCars = async () => {
     try {
-      const response = await axios.get('/cars/');
+      const response = await axios.get('/cars');
 
       if (!Array.isArray(response.data)) {
         this.setState({
