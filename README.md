@@ -6,7 +6,7 @@ The project has been repaired and brought back to a reliable working state while
 
 ## Live Demo
 
-**Online demo:** https://mern-car-collection-preview-fixed.vercel.app
+**Online demo:** https://david-millers-garage.vercel.app
 
 The hosted version is a safe demonstration environment. Demo data is disposable and is not intended as permanent storage.
 
