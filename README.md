@@ -57,7 +57,7 @@ Each car stores:
 
 ## Project Restoration
 
-This repository began as an early full-stack MERN project in 2020. The restoration work focused on fixing the original application rather than replacing it with an unrelated rewrite.
+This repository began as an early full-stack MERN project in 2020. The restoration focused on fixing the original application rather than replacing it with an unrelated rewrite.
 
 The completed work includes:
 
@@ -71,7 +71,9 @@ The completed work includes:
 - added API CRUD testing;
 - added automated CI;
 - verified the production React build;
-- refreshed the project identity as **David Miller’s Garage**.
+- refreshed the project identity as **David Miller’s Garage**;
+- removed obsolete generated build artefacts and unused legacy assets;
+- flattened the old nested project folder into a clean repository structure.
 
 ## Repository History
 
@@ -83,6 +85,21 @@ The original pre-restoration state is preserved on:
 
 This keeps the historical version available without making it the public default version of the project.
 
+## Project Structure
+
+```text
+.
+├── client/
+│   ├── public/
+│   └── src/
+├── models/
+├── routes/
+├── tests/
+├── server.js
+├── package.json
+└── README.md
+```
+
 ## Local Setup
 
 ### Requirements
@@ -90,23 +107,16 @@ This keeps the historical version available without making it the public default
 - Node.js 20 or newer
 - npm
 
-### Install the API
+### Install dependencies
+
+From the repository root:
 
 ```bash
-cd Mern_CarCollection_DataBase
 npm install
-```
-
-### Install the React client
-
-```bash
-cd client
-npm install
+npm install --prefix client
 ```
 
 ### Run the API
-
-From `Mern_CarCollection_DataBase`:
 
 ```bash
 npm start
@@ -122,10 +132,8 @@ If no MongoDB connection is configured, the API automatically uses the safe in-m
 
 ### Run the React client
 
-From `Mern_CarCollection_DataBase/client`:
-
 ```bash
-npm start
+npm start --prefix client
 ```
 
 The React development server uses the local API through its proxy configuration.
@@ -151,8 +159,6 @@ DELETE  /cars/:id
 
 ### API CRUD test
 
-From `Mern_CarCollection_DataBase`:
-
 ```bash
 npm test
 ```
@@ -165,18 +171,14 @@ health → list → create → read → update → delete
 
 ### React test
 
-From `Mern_CarCollection_DataBase/client`:
-
 ```bash
-npm test
+npm test --prefix client
 ```
 
 ### Production build
 
-From `Mern_CarCollection_DataBase/client`:
-
 ```bash
-npm run build
+npm run build --prefix client
 ```
 
 GitHub Actions runs the API test, React test and production build automatically for `main` and pull requests targeting `main`.
