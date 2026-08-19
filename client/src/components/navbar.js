@@ -7,7 +7,8 @@ function Navbar() {
       <a className='skip-link' href='#main-content'>Skip to main content</a>
       <nav className='site-nav container' aria-label='Primary navigation'>
         <Link to='/' className='brand'>
-          David Miller’s Garage
+          <img className='brand-mark' src='/garage-mark.svg' alt='' aria-hidden='true' />
+          <span>David Miller’s Garage</span>
         </Link>
         <div className='nav-links'>
           <NavLink exact to='/' activeClassName='active'>Collection</NavLink>
