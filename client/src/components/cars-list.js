@@ -101,12 +101,12 @@ class CarsList extends Component {
               <tbody>
                 {cars.map((car) => (
                   <tr key={car._id}>
-                    <td>{car.owner}</td>
-                    <td>{car.make}</td>
-                    <td>{car.model}</td>
-                    <td>{car.color}</td>
-                    <td>{car.registration_Number}</td>
-                    <td className='actions-cell'>
+                    <td data-label='Owner'>{car.owner}</td>
+                    <td data-label='Make'>{car.make}</td>
+                    <td data-label='Model'>{car.model}</td>
+                    <td data-label='Colour'>{car.color}</td>
+                    <td data-label='Registration'>{car.registration_Number}</td>
+                    <td className='actions-cell' data-label='Actions'>
                       <Link to={`/edit/${car._id}`} className='btn btn-sm btn-outline-success'>
                         Edit
                       </Link>
