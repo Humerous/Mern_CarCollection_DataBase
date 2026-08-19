@@ -1,0 +1,18 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "outputDirectory": "client/build",
+  "rewrites": [
+    {
+      "source": "/health",
+      "destination": "/api/handler?route=health"
+    },
+    {
+      "source": "/cars",
+      "destination": "/api/handler?route=cars"
+    },
+    {
+      "source": "/cars/:path*",
+      "destination": "/api/handler?route=cars/:path*"
+    }
+  ]
+}
