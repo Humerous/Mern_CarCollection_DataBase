@@ -1,6 +1,15 @@
 {
   "short_name": "Miller’s Garage",
   "name": "David Miller’s Garage",
+  "description": "A restored MERN car collection CRUD application.",
+  "icons": [
+    {
+      "src": "garage-mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#132238",
